@@ -1,0 +1,105 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "import/no-unresolved": [
+      "off"
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "always"
+    ],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "max-len": [
+      2, 
+      {
+        "code": 130, 
+        "tabWidth": 4, 
+        "ignoreUrls": true
+      }
+    ],
+    "no-class-assign": [
+      "off"
+    ],
+    "no-func-assign": [
+      "off"
+    ],
+    "no-multi-str": [
+      "off"
+    ],
+    "no-mixed-operators": [
+      "off"
+    ],
+    "no-nested-ternary": [
+      "off"
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "object-curly-newline": [
+      "error", 
+      { 
+        "consistent": true 
+      }
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "react/react-in-jsx-scope": 0,
+    "react/forbid-prop-types": [
+      "off"
+    ],
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/prop-types": [
+      "off"
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-fragments": [1, "element"],
+    "jsx-a11y/media-has-caption" : "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
+}
