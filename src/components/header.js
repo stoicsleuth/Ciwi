@@ -13,7 +13,6 @@ const Nav = styled.div`
 const StyledNavLink = styled(NavLink)`
     width: 33.333%;
     text-align: left;
-    text-
 `
 
 const Header = () => {
