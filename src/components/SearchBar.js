@@ -1,22 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ReactComponent as SearchLogo } from '../assets/icons/search.svg'
 
+import { ReactComponent as SearchLogo } from '../assets/icons/search.svg'
 import FlexGroup from './containers/FlexGroup'
 
 const StyledLogo = styled(SearchLogo)`
-  width: 20px;
   fill: #1a1a27;
+  width: 20px;
 `
 
 const StyledSearchInput = styled.input`
-  display: flex;
   background: inherit;
   border: none;
+  color: white;
+  display: flex;
+  font-size: 1rem;
   height: 22px;
   outline: none;
-  color: white;
-  font-size: 1rem;
+  transition: 0.4s width ease-in-out;
+  width: 150px;
+
+  &:focus {
+    width: 200px;
+  }
 `
 
 function SearchBar({ className }) {
