@@ -26,11 +26,13 @@ function SearchBar({ className }) {
     setNewFilter(event.target.value)
   }
   return (
+    <div>
     <FlexGroup className={className} gutter={8}>
       <StyledLogo />
       <StyledSearchInput type="text" placeholder="Search.." onClick={() => {}} onChange={handleChange} />
-      <StyledBox newFilter={newFilter} result={["Jojo Rabbit","Pushing Daisies","What We Do In The Shadows","Father Ted","Ted"]} />
     </FlexGroup>
+      <StyledBox newFilter={newFilter} result={["Jojo Rabbit","Pushing Daisies","What We Do In The Shadows","Father Ted","Ted"]} />
+    </div>
   )
 }
 
