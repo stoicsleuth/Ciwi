@@ -18,10 +18,8 @@ const A = styled.a`
     font-size: 18px;
     display: block;
     color: white;
-`
-const Li = styled.li`
-    ${A}:hover & {
-        fill: gray;
+    &:hover {
+        background-color: gray;
     }
 `
 
@@ -33,7 +31,7 @@ const StyledBox = ({newFilter,result}) => {
     else{
         return(
             <Ul>
-                {(result.filter(res => res.toLowerCase().includes(newFilter.toLowerCase()))).map(res => <Li><A href="#" >{res}</A></Li>)}
+                {(result.filter(res => res.toLowerCase().includes(newFilter.toLowerCase()))).map(res => <li><A href="#" >{res}</A></li>)}
             </Ul>
         )
     }
