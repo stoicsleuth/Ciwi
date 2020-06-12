@@ -5,9 +5,7 @@ import sWR, { useSWRPages } from 'swr'
 
 import Header from '../Header'
 import titleFetcher from '../../utils/titleFetcher'
-
-
-const commonSearchString = 'https://unogsng.p.rapidapi.com/search?&limit=20&start_year=1900&end_year=2020'
+import commonSearchString from '../../constants/commonSearchString'
 
 const PageContainer = styled.div`
   padding: 50px;
@@ -45,6 +43,7 @@ function Home({ orderBy = 'rating' }) {
       const { data: { results } = {} } = withSWR(
         sWR(
           [ commonSearchString,
+            null,
             orderBy,
             country,
             offset

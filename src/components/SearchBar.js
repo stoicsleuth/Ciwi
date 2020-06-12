@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as SearchLogo } from '../assets/icons/search.svg'
 import FlexGroup from './containers/FlexGroup'
-import StyledBox from './StyledBox'
+import SearchBox from './SearchBox'
+import useDebounce from '../hooks/useDebounce'
+import useClickOutside from '../hooks/useClickOutside'
+
 
 const StyledLogo = styled(SearchLogo)`
   fill: #1a1a27;
@@ -19,26 +22,36 @@ const StyledSearchInput = styled.input`
   height: 22px;
   outline: none;
   transition: 0.4s width ease-in-out;
-  width: 150px;
+  width: ${({ query }) => (query ? '300px' : '150px')};
 
   &:focus {
-    width: 200px;
+    width: 300px;
   }
 `
 
+const StyledSearchBar = styled.div`
+  position: relative;
+`
+
 function SearchBar({ className }) {
-  const [newFilter,setNewFilter] = useState('')
+  const [ query, setQuery ] = useState('')
+  const debouncedQuery = useDebounce(query, 1000)
+
+  const searchBoxRef = useRef()
+  useClickOutside(searchBoxRef, () => setQuery(''))
+
   const handleChange = (event) => {
-    setNewFilter(event.target.value)
+    setQuery(event.target.value)
   }
+
   return (
-    <div>
-    <FlexGroup className={className} gutter={8}>
-      <StyledLogo />
-      <StyledSearchInput type="text" placeholder="Search.." onClick={() => {}} onChange={handleChange} />
-    </FlexGroup>
-      <StyledBox newFilter={newFilter} result={["Jojo Rabbit","Pushing Daisies","What We Do In The Shadows","Father Ted","Ted"]} />
-    </div>
+    <StyledSearchBar>
+      <FlexGroup className={className} gutter={8}>
+        <StyledLogo />
+        <StyledSearchInput query={query} type="text" placeholder="Search.." onClick={() => {}} onChange={handleChange} />
+      </FlexGroup>
+      <SearchBox ref={searchBoxRef} query={debouncedQuery} />
+    </StyledSearchBar>
   )
 }
 
