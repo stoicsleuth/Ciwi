@@ -9,8 +9,8 @@ import useClickOutside from '../hooks/useClickOutside'
 
 
 const StyledLogo = styled(SearchLogo)`
-  fill: #1a1a27;
-  width: 20px;
+  fill: white;
+  width: 15px;
 `
 
 const StyledSearchInput = styled.input`
@@ -46,7 +46,7 @@ function SearchBar({ className }) {
 
   return (
     <StyledSearchBar>
-      <FlexGroup className={className} gutter={8}>
+      <FlexGroup className={className} gutter={8} center>
         <StyledLogo />
         <StyledSearchInput query={query} type="text" placeholder="Search.." onClick={() => {}} onChange={handleChange} />
       </FlexGroup>
@@ -57,6 +57,8 @@ function SearchBar({ className }) {
 
 export default styled(SearchBar)`
   padding: 5px;
-  background: #42425d;
   border-radius: 5px;
+  background: transparent;
+  border: 1px solid #717171;
+  padding-left: 10px;
 `

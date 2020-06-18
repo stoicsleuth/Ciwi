@@ -5,7 +5,7 @@ import { unescape } from 'lodash'
 
 import Skeleton from 'react-loading-skeleton'
 import commonSearchString from '../constants/commonSearchString'
-import titleFetcher from '../utils/titleFetcher'
+import { titleFetcher } from '../utils/titleFetcher'
 import FlexGroup from './containers/FlexGroup'
 
 
