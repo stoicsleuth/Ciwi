@@ -14,11 +14,15 @@ const PageContainer = styled.div`
 const ImageGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(170px,1fr));
-  grid-gap: 15px;
+  grid-gap: 20px;
   margin: 0 15px;
 `
 const TitleCard = styled.div`
   position: relative;
+  border-radius: 9px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
 `
 
 function Home({ orderBy = 'rating' }) {
@@ -62,7 +66,7 @@ function Home({ orderBy = 'rating' }) {
       return results.map((title) => (
         // TODO: Make these links, overlay with title type
         <TitleCard>
-          <img src={title.img} alt={title.title} />
+          <img width="100%" src={title.img} alt={title.title} />
         </TitleCard>
       ))
     },
