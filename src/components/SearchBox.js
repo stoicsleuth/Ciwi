@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import styled from 'styled-components'
 import useSWR from 'swr'
 import { unescape } from 'lodash'
@@ -7,30 +7,20 @@ import Skeleton from 'react-loading-skeleton'
 import commonSearchString from '../constants/commonSearchString'
 import { titleFetcher } from '../utils/titleFetcher'
 import FlexGroup from './containers/FlexGroup'
+import CountryFilterContext from '../contexts/CountryFilterContext'
+import breakpoints from '../constants/breakpoints'
 
 
 const Ul = styled.ul`
   list-style-type: none;
   margin: 0px;
   padding: 0px;
+  width: 100%;
 
   & > * {
     margin-bottom: 10px;
   }
 `
-
-// const A = styled.a`
-//     border: 1px solid #ddd;
-//     margin-top: -1px;
-//     text-decoration: none;
-//     font-size: 18px;
-//     display: block;
-//     color: white;
-
-//     &:hover {
-//         background-color: gray;
-//     }
-// `
 
 const StyledSearchBox = styled.div`
   padding: 10px;
@@ -39,6 +29,15 @@ const StyledSearchBox = styled.div`
   right: 0px;
   background-color: #191927;
   z-index: 10;
+  max-height: 500px;
+  overflow: scroll;
+
+  @media ${breakpoints.mobileL} {
+    margin-top: 30px;
+    left: 20px;
+    right: 20px;
+    display: ${({ xs }) => (!xs ? 'none' : 'flex')};
+  }
 `
 
 const Image = styled.img.attrs(({ src, alt }) => ({ src, alt }))`
@@ -58,9 +57,9 @@ const Text = styled.p`
   color: #fff;
 `
 
-function TitleResultView({ title: { title, vtype, year, img } = {}, loading } = {}) {
+function TitleResultView({ title: { title, vtype, _year, img } = {}, loading } = {}) {
   return (
-    <FlexGroup paddingV={10} background="#12111b" align="center" radius={5} height={55}>
+    <FlexGroup paddingV={10} background="#12111b" align="center" radius={5} height={55} series>
       {loading
         ? <Skeleton width={55} height={55} />
         : <TitlePoster src={img} alt={title} width={55} height={55} />}
@@ -78,14 +77,18 @@ function TitleResultView({ title: { title, vtype, year, img } = {}, loading } = 
   )
 }
 
-const SearchBox = React.forwardRef(({ query }, ref) => {
-  const { data } = useSWR(() => (query ? [ commonSearchString, query ] : null), titleFetcher)
+const SearchBox = React.forwardRef(({ query, ...rest }, ref) => {
+  const { countryFilter } = useContext(CountryFilterContext)
+
+  const { data } = useSWR(() => (query ? [ commonSearchString, query, null, countryFilter ] : null), titleFetcher)
   const { results, total } = data || {}
 
-  if (!query.trim()) return null
+  if (!query.trim()) {
+    return null
+  }
 
   return (
-    <StyledSearchBox ref={ref}>
+    <StyledSearchBox ref={ref} {...rest}>
       <Ul>
         {!data && new Array(3).fill(undefined).map(() => (
           <TitleResultView loading />

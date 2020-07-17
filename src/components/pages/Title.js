@@ -13,6 +13,7 @@ import { titleDetailsFetcher, titleImageFetcher } from '../../utils/titleFetcher
 import { titleSearchString, imageSearchString } from '../../constants/commonSearchString'
 import FlexGroup from '../containers/FlexGroup'
 import Header from '../Header'
+import breakpoints from '../../constants/breakpoints'
 
 const PageContainer = styled.div`
   height: 100vh;
@@ -35,9 +36,13 @@ const MovieTitle = styled.p`
   color: white;
   padding: 5px;
   margin: 0px;
-  max-width: 200px;
+  max-width: 500px;
   letter-spacing: -2.5px;
   line-height: 1.1;
+
+  @media ${breakpoints.mobileL} {
+    font-size: 2rem;
+  }
 `
 
 const MovieYear = styled.p`
@@ -46,6 +51,15 @@ const MovieYear = styled.p`
   color: white;
   margin: -10px;
   padding: 5px;
+  display: ${({ xs }) => (xs ? 'none' : 'block')};
+
+  @media ${breakpoints.mobileL} {
+    display: ${({ xs }) => (!xs ? 'none' : 'inline')};
+    margin-left: 9px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0px;
+  }
 `
 
 const MovieRating = styled(FlexGroup)`
@@ -63,12 +77,22 @@ const MovieRating = styled(FlexGroup)`
     fill: white;
     width: 20px;
   }
+
+  @media ${breakpoints.mobileL} {
+    margin-bottom: 25px;
+  }
 `
 
 const MovieDesc = styled(MovieYear)`
   max-width: 500px;
   margin: 0px;
   font-size: 1.3rem;
+
+  @media ${breakpoints.mobileL} {
+    font-size: 1.1rem;
+    margin-left: 0px;
+    display: block;
+  }
 `
 
 const MoviePoster = styled.div`
@@ -87,6 +111,12 @@ const MoviePoster = styled.div`
     width: auto;
     height: 100%;
     border-radius: 8px;
+  }
+
+  @media ${breakpoints.mobileL} {
+    width: 155px;
+    height: 220px;
+    margin: 0px;
   }
 `
 
@@ -116,6 +146,10 @@ const WatchButton = styled(TitleType)`
   svg {
     fill: white;
   }
+
+  @media ${breakpoints.mobileL} {
+    width: 128px;
+  }
 `
 
 const MovieDetails = styled.div`
@@ -125,6 +159,11 @@ const MovieDetails = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media ${breakpoints.mobileL} {
+    padding: 10px;
+    height: auto;
+  }
 `
 
 function Title() {
@@ -159,10 +198,10 @@ function Title() {
           alt={details.title}
           onError={handleImageError}
         />
-        <FlexGroup wrap fullHeight center paddingV={0} paddingH={50}>
+        <FlexGroup maxWidth={1300} wrap fullHeight center paddingV={0} paddingH={50}>
           <MoviePoster>
             {detailsLoading
-              ? <Skeleton width={250} height={350} />
+              ? <Skeleton />
               : (
                 <LazyLoadImage
                   effect="blur"
@@ -176,7 +215,7 @@ function Title() {
             <FlexGroup center>
               {detailsLoading && <Skeleton width={50} height={15} />}
               <MovieYear>{details.year}</MovieYear>
-              <MovieRating>
+              <MovieRating series>
                 {details.imdbrating > 0 && (
                   <Fragment>
                     <StarLogo />
@@ -188,12 +227,13 @@ function Title() {
             <MovieTitle>
               {detailsLoading
                 ? <Skeleton width={200} height={50} /> : unescape(details.title)}
+              <MovieYear xs>{details.year}</MovieYear>
             </MovieTitle>
             <MovieDesc>
               {detailsLoading
                 ? <Skeleton count={3} width={300} height={20} /> : unescape(details.synopsis)}
             </MovieDesc>
-            <FlexGroup stretch>
+            <FlexGroup stretch series>
               {!detailsLoading && <TitleType type={details.vtype}>{details.vtype}</TitleType>}
               {!detailsLoading && (
                 <a href={`https://netflix.com/title/${id}`} rel="noreferrer" target="_blank">
